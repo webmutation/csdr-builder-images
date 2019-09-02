@@ -101,6 +101,20 @@ RUN set -x && \
         bzip2 \
         zip
 
+# Install Sonar Scanner 
+# In case of problems try to downgrade the version of the scanner
+
+ENV SONAR_SCANNER_VERSION 3.2.0.1227
+
+RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
+    unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \
+    cd /usr/bin && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner sonar-scanner && \
+    ln -s /usr/bin/sonar-scanner-run.sh /bin/gitlab-sonar-scanner
+
+# Utility for Sonar Scanner 
+	
+COPY sonar-scanner-run.sh /usr/bin
+
 # RUN node -v
 # RUN npm -v
 # RUN yarn -v
