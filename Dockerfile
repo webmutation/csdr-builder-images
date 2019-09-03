@@ -74,26 +74,6 @@ RUN ln -sf /usr/bin/xvfb-chrome /usr/bin/google-chrome
 
 ENV CHROME_BIN /usr/bin/google-chrome
 
-# Install firefox
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        pkg-mozilla-archive-keyring
-
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        xvfb \
-    && apt-get install -y \
-        firefox-esr
-
-ADD scripts/xvfb-firefox /usr/bin/xvfb-firefox
-RUN ln -sf /usr/bin/xvfb-firefox /usr/bin/firefox
-
-ENV FIREFOX_BIN /usr/bin/firefox
-
 # This is needed for PhantomJS
 RUN set -x && \
     apt-get update && \
