@@ -6,7 +6,7 @@ This Dockerfile contains:
 
 * SCM tools
 * Java OpenJDK 8
-* Maven 3.3.9
+* Maven 3.6.3
 * Node 10.x
 * npm and yarn latest
 * Google Chrome latest
