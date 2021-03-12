@@ -7,7 +7,7 @@ This Dockerfile contains:
 * SCM tools
 * Java OpenJDK 8
 * Maven 3.6.3
-* Node 10.x
+* Node 12.x LTS
 * npm and yarn latest
 * Google Chrome latest
 * Bzip2 (for PhantomJS install)
