@@ -11,8 +11,9 @@ ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
 RUN set -x \
-    && add-apt-repository -y ppa:openjdk-r/ppa \
     && apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:openjdk-r/ppa \
     && apt-get install -y \
         ca-certificates-java \
         openjdk-11-jre-headless \
