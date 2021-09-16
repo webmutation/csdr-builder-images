@@ -14,6 +14,7 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y software-properties-common \
     && add-apt-repository -y ppa:openjdk-r/ppa \
+    && apt-get update \
     && apt-get install -y \
         ca-certificates-java \
         openjdk-11-jre-headless \
