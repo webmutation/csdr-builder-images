@@ -5,7 +5,7 @@ Is a fork of https://bitbucket.org/atlassian/docker-node-jdk-chrome-firefox
 This Dockerfile contains:
 
 * SCM tools
-* Java OpenJDK 8
+* Java OpenJDK 11
 * Maven 3.6.3
 * Node 12.x LTS
 * npm and yarn latest

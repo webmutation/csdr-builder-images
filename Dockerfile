@@ -5,6 +5,8 @@ FROM buildpack-deps:stretch-scm
 RUN set -x \
     && apt-get update \
     && apt-get install -y locales  ca-certificates-java
+
+# NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.    
        
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
