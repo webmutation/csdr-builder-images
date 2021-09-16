@@ -14,12 +14,12 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y \
         ca-certificates-java \
-        openjdk-8-jre-headless \
-        openjdk-8-jre \
-        openjdk-8-jdk-headless \
-        openjdk-8-jdk
+        openjdk-11-jre-headless \
+        openjdk-11-jre \
+        openjdk-11-jdk-headless \
+        openjdk-11-jdk
 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Install maven
