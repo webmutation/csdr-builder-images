@@ -4,8 +4,7 @@ FROM buildpack-deps:stretch-scm
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y \
-        locales
+    && apt-get install -y locales  ca-certificates-java
        
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
@@ -19,7 +18,7 @@ RUN if grep -q Debian /etc/os-release && grep -q stretch /etc/os-release; then \
 		apt-get update && apt-get install -y software-properties-common && \
 		add-apt-repository -y ppa:openjdk-r/ppa; \
 	fi && \
-	apt-get update && apt-get install -y ca-certificates-java openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+	apt-get update && apt-get install -y openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
 
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
