@@ -4,25 +4,22 @@ FROM buildpack-deps:stretch-scm
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales  ca-certificates-java
+    && apt-get install -y \
+        locales
 
-# NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.    
-       
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
-#
-# Install Java 11 LTS / OpenJDK 11
-#
-RUN if grep -q Debian /etc/os-release && grep -q stretch /etc/os-release; then \
-		echo 'deb http://deb.debian.org/debian stretch-backports main' | tee -a /etc/apt/sources.list.d/stretch-backports.list; \
-	elif grep -q Ubuntu /etc/os-release && grep -q xenial /etc/os-release; then \
-		apt-get update && apt-get install -y software-properties-common && \
-		add-apt-repository -y ppa:openjdk-r/ppa; \
-	fi && \
-	apt-get update && apt-get install -y openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y \
+        ca-certificates-java \
+        openjdk-8-jre-headless \
+        openjdk-8-jre \
+        openjdk-8-jdk-headless \
+        openjdk-8-jdk
 
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Install maven
