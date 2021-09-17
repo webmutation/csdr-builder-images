@@ -1,4 +1,4 @@
-FROM buildpack-deps:stretch-scm
+FROM buildpack-deps:21.04-scm
 
 # Install Java 8
 
@@ -7,7 +7,7 @@ RUN set -x \
     && apt-get install -y \
         locales
 
-ENV LANG C.UTF-8
+ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
 
 RUN set -x \
