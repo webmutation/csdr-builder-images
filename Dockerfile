@@ -1,4 +1,4 @@
-FROM buildpack-deps:21.04-scm
+FROM buildpack-deps:stretch-scm
 
 # Install Java 8
 
