@@ -5,7 +5,7 @@ FROM buildpack-deps:21.04-curl
 RUN set -x \
     && apt-get update \
     && apt-get install -y \
-        locales curl
+        locales curl=7.74.0-1ubuntu2.3
 
 ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
