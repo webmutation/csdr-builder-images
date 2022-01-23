@@ -1,4 +1,4 @@
-FROM buildpack-deps:21.04-curl
+FROM buildpack-deps:impish-curl
 
 # Install Java 8
 
