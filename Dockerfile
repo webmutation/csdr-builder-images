@@ -36,11 +36,9 @@ VOLUME /root/.m2
 
 # Install node 10
 RUN set -x \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get update \
-    && apt-get install -y \
-        nodejs \
-    && npm install -g npm@latest
+    && apt-get install -y nodejs
 
 # Make 'node' available
 RUN set -x \
@@ -84,7 +82,7 @@ RUN set -x && \
 # Install Sonar Scanner 
 # In case of problems try to downgrade the version of the scanner
 
-ENV SONAR_SCANNER_VERSION 3.2.0.1227
+ENV SONAR_SCANNER_VERSION 4.7.0.2747
 
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
     unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \
@@ -94,11 +92,3 @@ RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-s
 # Utility for Sonar Scanner 
 	
 COPY sonar-scanner-run.sh /usr/bin
-
-# RUN node -v
-# RUN npm -v
-# RUN yarn -v
-# RUN java -version
-# RUN mvn -v
-# RUN apt-cache policy firefox-esr | grep Installed | sed -e "s/Installed/Firefox/"
-# RUN apt-cache policy google-chrome-stable | grep Installed | sed -e "s/Installed/Chrome/"
