@@ -36,7 +36,7 @@ VOLUME /root/.m2
 
 # Install node 10
 RUN set -x \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nodejs \
