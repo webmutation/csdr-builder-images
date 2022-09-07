@@ -40,7 +40,7 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y \
         nodejs \
-    && npm install -g npm@latest
+    && npm install -g npm@6.14.12
 
 # Make 'node' available
 RUN set -x \
