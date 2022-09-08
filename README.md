@@ -4,15 +4,15 @@ Is a fork of https://bitbucket.org/atlassian/docker-node-jdk-chrome-firefox
 
 This Dockerfile contains:
 
+* Ubuntu 22.04 LTS
 * SCM tools
-* Java OpenJDK 11
-* Maven 3.6.3
-* Node 12.x LTS
+* Java OpenJDK 8 (latest)
+* Maven (3.6.3) older version for compatibility 
+* Node 14.x LTS
 * npm and yarn latest
 * Google Chrome latest
-* Bzip2 (for PhantomJS install)
-* Zip
-* SonarScanner to be able to run Sonar Runner and send reports to SonarQube
+* Bzip2 & Zip
+* SonarScanner CLI (4.7.0.2747)
 
 ## How to build the image
 ```
