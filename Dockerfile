@@ -2,14 +2,14 @@ FROM buildpack-deps:22.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+    && apt-get install -y locales ca-certificates-java git openjdk-8-jre openjdk-8-jre-headless openjdk-8-jdk openjdk-8-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
-# Install Java 11 LTS / OpenJDK 11
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+# Install Java 8 LTS / OpenJDK 8
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Install maven
