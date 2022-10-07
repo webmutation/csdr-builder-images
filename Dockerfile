@@ -2,7 +2,7 @@ FROM buildpack-deps:22.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+    && apt-get install -y locales ca-certificates-java git openjdk-17-jre openjdk-17-jre-headless openjdk-17-jdk openjdk-17-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
 ENV LANG C.UTF-8
