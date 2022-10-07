@@ -8,8 +8,8 @@ RUN set -x \
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
-# Install Java 11 LTS / OpenJDK 11
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+# Install Java 17 LTS / OpenJDK 17
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Install maven
