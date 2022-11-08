@@ -2,7 +2,7 @@ FROM buildpack-deps:22.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales git
+    && apt-get install -y locales git curl=7.74.0-1.3ubuntu2.1 libgcrypt20=1.9.4-3ubuntu3
 
 ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
