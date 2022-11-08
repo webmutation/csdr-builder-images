@@ -1,8 +1,11 @@
-FROM buildpack-deps:22.04-curl
+FROM buildpack-deps:21.04-curl
+
+# Install Java 8
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales git curl=7.74.0-1.3ubuntu3 libgcrypt20=1.9.4-3ubuntu3
+    && apt-get install -y \
+        locales git curl=7.74.0-1ubuntu2.3 libgcrypt20=1.8.7-2ubuntu2.1
 
 ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
