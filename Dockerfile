@@ -1,9 +1,9 @@
-FROM buildpack-deps:22.04-curl
+FROM buildpack-deps:23.04-curl
 
 RUN set -x \
     && apt-get update \
     && apt-get install -y \
-        locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless curl=7.81.0-1ubuntu1.4 libgcrypt20=1.9.4-3ubuntu3
+        locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
 ENV LANG C.UTF-8
