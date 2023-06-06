@@ -1,25 +1,15 @@
-FROM buildpack-deps:20.04-curl
-
-# Install Java 8
+FROM buildpack-deps:22.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y \
-        locales git
+    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
 
-ENV LANG en_US.UTF-8
+# NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
+ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        ca-certificates-java \
-        openjdk-8-jre-headless \
-        openjdk-8-jre \
-        openjdk-8-jdk-headless \
-        openjdk-8-jdk
-
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+# Install Java 11 LTS / OpenJDK 11
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Install maven
@@ -31,10 +21,9 @@ RUN mkdir -p /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 ENV MAVEN_HOME /usr/share/maven
-
 VOLUME /root/.m2
 
-# Install node 10
+# Install node 16
 RUN set -x \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get update \
@@ -45,43 +34,22 @@ RUN set -x \
     && touch ~/.bashrc \
     && echo 'alias nodejs=node' > ~/.bashrc
 
-# Install yarn 1.7+
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        yarn
-
 # Install Chrome
-
 RUN echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/chrome.list
-
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN set -x \
     && apt-get update \
     && apt-get install -y \
         xvfb \
-        google-chrome-stable
+        google-chrome-stable bzip2 zip
 
 ADD scripts/xvfb-chrome /usr/bin/xvfb-chrome
 RUN ln -sf /usr/bin/xvfb-chrome /usr/bin/google-chrome
-
 ENV CHROME_BIN /usr/bin/google-chrome
-
-# This is needed for PhantomJS
-RUN set -x && \
-    apt-get update && \
-    apt-get install -y \
-        bzip2 \
-        zip
 
 # Install Sonar Scanner 
 # In case of problems try to downgrade the version of the scanner
-
 ENV SONAR_SCANNER_VERSION 4.7.0.2747
 
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
@@ -90,5 +58,4 @@ RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-s
     ln -s /usr/bin/sonar-scanner-run.sh /bin/gitlab-sonar-scanner
 
 # Utility for Sonar Scanner 
-	
 COPY sonar-scanner-run.sh /usr/bin
