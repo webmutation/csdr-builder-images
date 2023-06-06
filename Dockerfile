@@ -2,7 +2,8 @@ FROM buildpack-deps:22.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+    && apt-get install -y \
+        locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless curl=7.81.0-1ubuntu1.4 libgcrypt20=1.9.4-3ubuntu3
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
 ENV LANG C.UTF-8
@@ -29,7 +30,7 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y \
         nodejs \
-    && npm install -g npm@latest \
+    && npm install -g npm@6.14.4 \
     && npm install -g yarn
 
 # Make 'node' available
