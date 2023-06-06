@@ -1,4 +1,4 @@
-FROM buildpack-deps:23.04-curl
+FROM buildpack-deps:20.04-curl
 
 RUN set -x \
     && apt-get update \
