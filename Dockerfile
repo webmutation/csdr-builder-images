@@ -6,7 +6,7 @@ RUN set -x \
         locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
-ENV LANG C.UTF-8
+ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
 
 # Install Java 11 LTS / OpenJDK 11
