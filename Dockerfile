@@ -1,4 +1,4 @@
-FROM buildpack-deps:22.04-curl
+FROM buildpack-deps:lunar-scm
 
 RUN set -x \
     && apt-get update \
