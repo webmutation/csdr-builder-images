@@ -1,11 +1,12 @@
-FROM buildpack-deps:23.04-curl
+FROM buildpack-deps:20.04-curl
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+    && apt-get install -y \
+        locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
-ENV LANG C.UTF-8
+ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
 
 # Install Java 11 LTS / OpenJDK 11
@@ -23,11 +24,14 @@ RUN mkdir -p /usr/share/maven \
 ENV MAVEN_HOME /usr/share/maven
 VOLUME /root/.m2
 
-# Install node 16
+# Install node 14
 RUN set -x \
     && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get update \
-    && apt-get install -y nodejs gcc g++ make
+    && apt-get install -y \
+        nodejs \
+    && npm install -g npm@6.14.4 \
+    && npm install -g yarn
 
 # Make 'node' available
 RUN set -x \
