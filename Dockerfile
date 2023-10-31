@@ -1,7 +1,7 @@
 FROM buildpack-deps:22.04-curl
+ARG GRAAL_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-17.0.9/graalvm-community-jdk-17.0.9_linux-x64_bin.tar.gz
 
-# Install Java 8
-
+# Install graalvm java 17
 RUN set -x \
     && apt-get update \
     && apt-get install -y \
@@ -10,16 +10,18 @@ RUN set -x \
 ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
 
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        ca-certificates-java \
-        openjdk-8-jre-headless \
-        openjdk-8-jre \
-        openjdk-8-jdk-headless \
-        openjdk-8-jdk
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    curl --retry 3 -Lfso /tmp/graalvm.tar.gz ${GRAAL_URL}; \
+    mkdir -p /opt/java/graalvm; \
+    cd /opt/java/graalvm; \
+    tar -xf /tmp/graalvm.tar.gz --strip-components=1; \
+    export PATH="/opt/java/graalvm/bin:$PATH"; \
+    rm -rf /tmp/graalvm.tar.gz;
 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME=/opt/java/graalvm \
+    PATH="/opt/java/graalvm/bin:$PATH"
+    
 RUN export JAVA_HOME
 
 # Install maven
