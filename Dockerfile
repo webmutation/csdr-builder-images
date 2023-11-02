@@ -24,6 +24,7 @@ ENV JAVA_HOME=/opt/java/graalvm \
     
 RUN export JAVA_HOME
 
+RUN gu install native-image
 # Install maven
 ENV MAVEN_VERSION 3.8.8
 
