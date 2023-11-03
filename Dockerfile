@@ -5,7 +5,7 @@ ARG GRAAL_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk
 RUN set -x \
     && apt-get update \
     && apt-get install -y \
-        locales git libgcrypt20=1.9.4-3ubuntu3
+        locales git libgcrypt20=1.9.4-3ubuntu3 make gcc
 
 ENV LANG en_US.UTF-8
 RUN locale-gen $LANG
