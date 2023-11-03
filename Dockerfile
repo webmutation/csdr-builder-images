@@ -39,11 +39,11 @@ VOLUME /root/.m2
 
 # Install node 10
 RUN set -x \
-    && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nodejs \
-    && npm install -g npm@latest
+    && npm install -g npm@8.19.2
 
 # Make 'node' available
 RUN set -x \
