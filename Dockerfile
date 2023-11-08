@@ -1,5 +1,5 @@
 FROM buildpack-deps:22.04-curl
-ARG GRAAL_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-17.0.9/graalvm-community-jdk-17.0.9_linux-x64_bin.tar.gz
+ARG GRAAL_URL=https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.1/graalvm-community-jdk-21.0.1_linux-x64_bin.tar.gz
 ARG MUSL_URL=https://more.musl.cc/10/x86_64-linux-musl/x86_64-linux-musl-native.tgz
 ARG ZLIB_URL=https://zlib.net/zlib-1.3.tar.gz
 ARG NODE_MAJOR=20 # NodeJS
