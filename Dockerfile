@@ -1,19 +1,31 @@
 FROM buildpack-deps:22.04-curl
+ARG JAVA_SDK_URL=https://download.java.net/java/GA/jdk21.0.1/415e3f918a1f4062a0074a2794853d0d/12/GPL/openjdk-21.0.1_linux-x64_bin.tar.gz
+ARG NODE_MAJOR=20 # NodeJS
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-17-jre openjdk-17-jre-headless openjdk-17-jdk openjdk-17-jdk-headless
+    && apt-get install -y locales ca-certificates-java git
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
 ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
-# Install Java 17 LTS / OpenJDK 17
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64/
-RUN export JAVA_HOME
+# Install Java  LTS / OpenJDK 17
+RUN set -eux; \
+    export DEBIAN_FRONTEND=noninteractive; \
+    curl --retry 3 -Lfso /tmp/openjdk21.tar.gz ${JAVA_SDK_URL}; \
+    mkdir -p /opt/java/openjdk21; \
+    cd /opt/java/openjdk21; \
+    tar -xf /tmp/openjdk21.tar.gz --strip-components=1; \
+    export PATH="/opt/java/openjdk21/bin:$PATH"; \
+    rm -rf /tmp/openjdk21.tar.gz;
+
+
+ENV JAVA_HOME=/opt/java/openjdk21 \
+    PATH="/opt/java/openjdk21/bin:$PATH"
 
 # Install maven
-ENV MAVEN_VERSION 3.6.3
+ENV MAVEN_VERSION 3.8.8
 
 RUN mkdir -p /usr/share/maven \
   && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
@@ -23,14 +35,13 @@ RUN mkdir -p /usr/share/maven \
 ENV MAVEN_HOME /usr/share/maven
 VOLUME /root/.m2
 
-# Install node 14
-RUN set -x \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+# install NodeJS
+RUN mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
-    && apt-get install -y \
-        nodejs \
-    && npm install -g npm@latest \
-    && npm install -g yarn
+    && apt-get install -y nodejs yarn bzip2 zip unzip \
+    && npm install -g npm@8.19.2
 
 # Make 'node' available
 RUN set -x \
