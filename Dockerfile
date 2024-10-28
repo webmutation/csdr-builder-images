@@ -26,7 +26,7 @@ ENV LANG C.UTF-8
 RUN locale-gen $LANG
 
 # Install Maven
-ENV MAVEN_VERSION 3.8.1
+ENV MAVEN_VERSION 3.8.8
 RUN mkdir -p /usr/share/maven \
     && curl -fsSL https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.tar.gz \
     | tar -xzC /usr/share/maven --strip-components=1 \
