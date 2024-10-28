@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS base
+FROM debian:11-slim AS base
 
 # Install dependencies
 RUN set -x \
