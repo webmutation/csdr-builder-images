@@ -43,6 +43,7 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
 
 # Install Node packages
 RUN npm install -g \
+    cross-spawn@7.0.5 \
     @semantic-release/git \
     @semantic-release/gitlab \
     @semantic-release/exec \
