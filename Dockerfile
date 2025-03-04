@@ -42,7 +42,8 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node packages
-RUN # Remove old version
+RUN npm install -g npm@10.9.0 && \
+    # Remove old version
     npm uninstall -g cross-spawn && \
     npm cache clean --force && \
     # Find and remove any remaining old versions
