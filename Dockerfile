@@ -42,8 +42,13 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node packages
-RUN npm install -g \
-    cross-spawn@7.0.5 \
+RUN # Remove old version
+    npm uninstall -g cross-spawn && \
+    npm cache clean --force && \
+    # Find and remove any remaining old versions
+    find /usr/local/lib/node_modules -name "cross-spawn" -type d -exec rm -rf {} + && \
+    # Install new version
+    npm install -g cross-spawn@7.0.5 \
     @semantic-release/git \
     @semantic-release/gitlab \
     @semantic-release/exec \
