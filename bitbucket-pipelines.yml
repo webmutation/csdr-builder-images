@@ -6,21 +6,29 @@ pipelines:
     - step:
         script:
           - export IMAGE_NAME=atlassianlabs/docker-node-jdk-chrome-firefox:latest
-          - docker buildx build --provenance=true --sbom=true -t $IMAGE_NAME .
+          - export DOCKER_BUILDKIT=1
+          - docker buildx create --use
+          - docker buildx build --attest=provenance=mode=max --attest=sbom=spdx -t $IMAGE_NAME .
+
   branches:
     master:
       - step:
           script:
             - export IMAGE_NAME=atlassianlabs/docker-node-jdk-chrome-firefox:latest
-            - docker buildx build --provenance=true --sbom=true -t $IMAGE_NAME .
+            - export DOCKER_BUILDKIT=1
+            - docker buildx create --use
+            - docker buildx build --attest=provenance=mode=max --attest=sbom=spdx -t $IMAGE_NAME .
             - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
             - docker push $IMAGE_NAME
+
   custom:
     deployment-to-hub-docker:
       - step:
           script:
-            - DATE=`date +%Y-%m-%d`
+            - export DATE=`date +%Y-%m-%d`
             - export IMAGE_NAME=atlassianlabs/docker-node-jdk-chrome-firefox:$DATE
-            - docker buildx build --provenance=true --sbom=true -t $IMAGE_NAME .
+            - export DOCKER_BUILDKIT=1
+            - docker buildx create --use
+            - docker buildx build --attest=provenance=mode=max --attest=sbom=spdx -t $IMAGE_NAME .
             - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
             - docker push $IMAGE_NAME
