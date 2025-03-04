@@ -7,7 +7,6 @@ pipelines:
         script:
           - export IMAGE_NAME=atlassianlabs/docker-node-jdk-chrome-firefox:latest
           - export DOCKER_BUILDKIT=1
-          - docker buildx create --use
           - docker buildx build --attest=provenance=mode=max --attest=sbom=spdx -t $IMAGE_NAME .
 
   branches:
