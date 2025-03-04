@@ -45,10 +45,10 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends nodejs; \
     npm install -g npm@10.9.0; \
-    npm uninstall -g cross-spawn; \
+    npm uninstall -g cross-spawn || true; \
+    find $(npm root -g) -name "cross-spawn" -type d -exec rm -rf {} +; \
     npm cache clean --force; \
-    npm install -g \
-        cross-spawn@7.0.5 \
+    npm install -g cross-spawn@7.0.5 \
         @semantic-release/git \
         @semantic-release/gitlab \
         @semantic-release/exec \
