@@ -1,33 +1,40 @@
-FROM buildpack-deps:lunar-scm
+FROM buildpack-deps:24.10-scm
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y locales ca-certificates-java git openjdk-11-jre openjdk-11-jre-headless openjdk-11-jdk openjdk-11-jdk-headless
+    && apt-get install -y locales ca-certificates-java git openjdk-17-jre openjdk-17-jre-headless openjdk-17-jdk openjdk-17-jdk-headless
 
 # NOTE: adding ca-certificates-java jdk8 version, before adding the backport. new version is not compatible.     
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 RUN locale-gen $LANG
 
-# Install Java 11 LTS / OpenJDK 11
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
-RUN export JAVA_HOME
+# Install Java 17 LTS / OpenJDK 17
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+RUN export=JAVA_HOME
 
 # Install maven
-ENV MAVEN_VERSION 3.6.3
+ENV MAVEN_VERSION=3.8.8
 
 RUN mkdir -p /usr/share/maven \
   && curl -fsSL https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.tar.gz \
     | tar -xzC /usr/share/maven --strip-components=1 \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_HOME=/usr/share/maven
 VOLUME /root/.m2
 
-# Install node 16
+# Install node 18
 RUN set -x \
     && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get update \
     && apt-get install -y nodejs gcc g++ make
+
+# Install fix version of cross-spawn
+RUN set -x; \
+    npm uninstall -g cross-spawn || true; \
+    find $(npm root -g) -name "cross-spawn" -type d -exec rm -rf {} +; \
+    npm cache clean --force; \
+    npm install -g cross-spawn@7.0.5;
 
 # Make 'node' available
 RUN set -x \
@@ -46,11 +53,11 @@ RUN set -x \
 
 ADD scripts/xvfb-chrome /usr/bin/xvfb-chrome
 RUN ln -sf /usr/bin/xvfb-chrome /usr/bin/google-chrome
-ENV CHROME_BIN /usr/bin/google-chrome
+ENV CHROME_BIN=/usr/bin/google-chrome
 
 # Install Sonar Scanner 
 # In case of problems try to downgrade the version of the scanner
-ENV SONAR_SCANNER_VERSION 4.7.0.2747
+ENV SONAR_SCANNER_VERSION=4.7.0.2747
 
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
     unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \
