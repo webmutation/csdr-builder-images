@@ -45,5 +45,5 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           echo "${{ secrets.COSIGN_KEY }}" > cosign.key
-          cosign sign --key --yes cosign.key ${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}
+          cosign sign --key cosign.key --yes ${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}
 
