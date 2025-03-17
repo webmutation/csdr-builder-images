@@ -46,6 +46,13 @@ RUN set -x \
     && apt-get install -y google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
+# Install fix version of cross-spawn
+RUN set -x \
+    && npm uninstall -g cross-spawn || true \
+    && find $(npm root -g) -name "cross-spawn" -type d -exec rm -rf {} + \
+    && npm cache clean --force \
+    && npm install -g cross-spawn@7.0.5
+
 # Install Maven
 RUN mkdir -p /usr/share/maven \
     && curl -fsSL https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.tar.gz \
