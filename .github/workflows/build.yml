@@ -38,7 +38,7 @@ jobs:
       - name: Install cosign
         uses: sigstore/cosign-installer@v2
         with:
-          cosign-release: 'v2.1.1' # Use the latest stable version of cosign
+          cosign-release: 'v2.4.1' # Use the latest stable version of cosign
 
       - name: Sign Docker image with cosign
         env:
