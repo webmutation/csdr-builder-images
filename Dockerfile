@@ -57,7 +57,7 @@ ENV CHROME_BIN=/usr/bin/google-chrome
 
 # Install Sonar Scanner 
 # In case of problems try to downgrade the version of the scanner
-ENV SONAR_SCANNER_VERSION=4.7.0.2747
+ENV SONAR_SCANNER_VERSION=7.0.2.4839-linux-x64
 
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip && \
     unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION} && \
