@@ -40,9 +40,13 @@ jobs:
         with:
           cosign-release: 'v2.1.1' # Use the latest stable version of cosign
 
+      - name: Write cosign key to file
+        run: echo "${{ secrets.COSIGN_KEY }}" > cosign.key
+
       - name: Sign Docker image with cosign
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
-          cosign sign --key ${{ secrets.COSIGN_KEY }} ${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}
+          echo "${{ secrets.COSIGN_KEY }}" > cosign.key
+          cosign sign --key cosign.key ${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}
 
