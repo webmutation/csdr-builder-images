@@ -8,6 +8,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  attestations: write
 
 jobs:
   docker:
@@ -43,8 +44,9 @@ jobs:
       - name: Generate attestation
         uses: actions/attest-build-provenance@v1
         with:
+          subject-name: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}" # Add the image name
           subject-digest: ${{ steps.build.outputs.digest }} # Use the digest output from the build step
-          predicate-type: slsa-provenance
+          push-to-registry: true
 
       - name: Install cosign
         uses: sigstore/cosign-installer@v2
