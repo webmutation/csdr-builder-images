@@ -30,6 +30,7 @@ jobs:
           install: true
 
       - name: Build and push
+        id: build # Add an ID to reference outputs
         uses: docker/build-push-action@v6
         with:
           tags: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}"
@@ -42,8 +43,7 @@ jobs:
       - name: Generate attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subjects: |
-            type=container,digest=${{ steps.build.outputs.digest }}
+          subject-digest: ${{ steps.build.outputs.digest }} # Use the digest output from the build step
           predicate-type: slsa-provenance
 
       - name: Install cosign
