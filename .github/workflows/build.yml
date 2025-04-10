@@ -5,6 +5,10 @@ on:
     branches:
       - "JDK21"
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -38,13 +42,14 @@ jobs:
       - name: Generate attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subjects: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}"
-          predicate-type: "https://slsa.dev/provenance/v0.2"
+          subjects: |
+            type=container,digest=${{ steps.build.outputs.digest }}
+          predicate-type: slsa-provenance
 
       - name: Install cosign
         uses: sigstore/cosign-installer@v2
         with:
-          cosign-release: 'v2.4.1' # Use the latest stable version of cosign
+          cosign-release: 'v2.4.3' # Use the latest stable version of cosign
 
       - name: Sign Docker image with cosign
         env:
