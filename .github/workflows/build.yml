@@ -44,7 +44,7 @@ jobs:
       - name: Generate attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:${{ github.ref_name }}" # Add the image name
+          subject-name: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo" # Add the image name, no tag
           subject-digest: ${{ steps.build.outputs.digest }} # Use the digest output from the build step
           push-to-registry: true
 
