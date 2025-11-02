@@ -1,11 +1,11 @@
-FROM buildpack-deps:24.04-scm
+FROM buildpack-deps:25.10-scm
 
 # Set environment variables
 ENV LANG=C.UTF-8 \
     JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/ \
-    MAVEN_VERSION=3.8.8 \
+    MAVEN_VERSION=3.9.9 \
     MAVEN_HOME=/usr/share/maven \
-    SONAR_SCANNER_VERSION=7.0.2.4839-linux-x64 \
+    SONAR_SCANNER_VERSION=7.3.0.5189-linux-x64 \
     CHROME_BIN=/usr/bin/google-chrome
 
 # Install required packages and dependencies
@@ -35,7 +35,7 @@ RUN set -x \
     && apt-get install -y nodejs \
     && npm uninstall -g cross-spawn || true \
     && npm cache clean --force \
-    && npm install -g cross-spawn@7.0.5 \
+    && npm install -g cross-spawn@7.0.6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Google Chrome repository and install Chrome
@@ -51,7 +51,7 @@ RUN set -x \
     && npm uninstall -g cross-spawn || true \
     && find $(npm root -g) -name "cross-spawn" -type d -exec rm -rf {} + \
     && npm cache clean --force \
-    && npm install -g cross-spawn@7.0.5
+    && npm install -g cross-spawn@7.0.6
 
 # Install Maven
 RUN mkdir -p /usr/share/maven \
