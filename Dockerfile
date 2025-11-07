@@ -37,6 +37,16 @@ RUN set -eux \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux \
+    && install -m 0755 -d /etc/apt/keyrings \
+    && . /etc/os-release \
+    && curl -fsSL "https://download.docker.com/linux/${ID}/gpg" | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
+    && chmod a+r /etc/apt/keyrings/docker.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${ID} ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN set -eux \
     && curl -fsSL "${JAVA_SDK_URL}" -o /tmp/temurin.tar.gz \
     && mkdir -p "${JAVA_HOME}" \
     && tar -xzf /tmp/temurin.tar.gz -C "${JAVA_HOME}" --strip-components=1 \
