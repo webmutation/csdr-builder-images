@@ -67,7 +67,8 @@ RUN set -eux \
     && npm_root="$(npm root -g)" \
     && find "$npm_root" -name "cross-spawn" -type d -prune -exec rm -rf {} + \
     && npm cache clean --force \
-    && npm install -g cross-spawn@7.0.6
+    && npm install -g cross-spawn@7.0.6 \
+    && npm install -g glob@11.1.0
 
 RUN set -eux \
     && curl -fsSL -o /usr/local/bin/jq "https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/jq-linux-amd64" \
