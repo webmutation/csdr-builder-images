@@ -11,8 +11,9 @@ ENV LANG=C.UTF-8 \
     SONAR_SCANNER_VERSION=7.3.0.5189-linux-x64 \
     CHROME_BIN=/usr/bin/google-chrome \
     NODE_VERSION=20.18.0 \
-    NPM_VERSION=10.9.0 \
+    NPM_VERSION=11.6.4 \
     JQ_VERSION=1.8.1 \
+    DOCKER_COMPOSE_VERSION=5.0.0-rc.2 \
     PATH="/usr/lib/jvm/temurin-21/bin:/usr/share/maven/bin:$PATH"
 
 RUN set -eux \
@@ -45,6 +46,11 @@ RUN set -eux \
     && apt-get update \
     && apt-get install -y --no-install-recommends docker-ce-cli \
     && rm -rf /var/lib/apt/lists/*
+
+RUN set -eux \
+    && curl -fsSL "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-$(uname -m)" -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
+    && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 RUN set -eux \
     && curl -fsSL "${JAVA_SDK_URL}" -o /tmp/temurin.tar.gz \
