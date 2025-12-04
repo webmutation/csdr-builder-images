@@ -11,7 +11,7 @@ ENV LANG=C.UTF-8 \
     SONAR_SCANNER_VERSION=7.3.0.5189-linux-x64 \
     CHROME_BIN=/usr/bin/google-chrome \
     NODE_VERSION=24.11.1 \
-    NPM_VERSION=10.9.0 \
+    NPM_VERSION=11.6.4 \
     JQ_VERSION=1.8.1 \
     PATH="/usr/lib/jvm/temurin-21/bin:/usr/share/maven/bin:$PATH"
 
@@ -67,8 +67,7 @@ RUN set -eux \
     && npm_root="$(npm root -g)" \
     && find "$npm_root" -name "cross-spawn" -type d -prune -exec rm -rf {} + \
     && npm cache clean --force \
-    && npm install -g cross-spawn@7.0.6 \
-    && npm install -g glob@11.1.0
+    && npm install -g cross-spawn@7.0.6
 
 RUN set -eux \
     && curl -fsSL -o /usr/local/bin/jq "https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/jq-linux-amd64" \
